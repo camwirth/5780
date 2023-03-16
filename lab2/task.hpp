@@ -4,7 +4,7 @@
 
 class Task {
     public:
-        Task(int p, int de, int r, int d, int c, int i) {
+        Task(int p, int de, int r, int d, int c, char i) {
             period = p;
             deadline = de;
             releaseTime = r;

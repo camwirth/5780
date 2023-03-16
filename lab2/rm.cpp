@@ -3,21 +3,24 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
+#include "priority.hpp"
+#include "task.hpp"
 
-int main(int arc, char** argv) {
+int stringToInt(std::string str) {
+    int temp = 0;
+    for(int i = 0; i < str.length(); i++) {
+        if(str[i] >= '0' && str[i] <= '9') {
+            temp = temp * 10 + (str[i] - '0');
+        }
+    }
+    return temp;
+}
 
-    struct {
-        char ID;
-        int priority, period, computationTime, duration;
-        bool overDue;
-    } periodicTask
+int main(int argc, char** argv) {
 
-    struct {
-        char ID;
-        int computationTime, releaseTime, duration;
-    } aperiodicTask
-
-    std::vector periodicTasks<periodicTask>;
+    std::vector<Task> periodicTasks;
+    std::vector<Task> aperiodicTasks;
 
     // check command line arguments
     if(argc != 3) {
@@ -42,16 +45,25 @@ int main(int arc, char** argv) {
         int numPeriodic, simulationTime;
 
         // get number of periodic tasks and simulation time from input file
-        input >> numPeriodic;
-        input >> simulationTime;
+        input >> numPeriodic >> simulationTime;
+        std::cout << "number of periodic tasks: " << numPeriodic << std::endl;
+        std::cout << "simulationTime: " << simulationTime << std::endl;
+        // input >> simulationTime;
+
+        char ID, comma;
+        int computationTime, period, releaseTime;
+        std::string line;
+
 
         for(int i = 0; i < numPeriodic; i++) {
-            periodicTask task;
+            input >> ID;
+            input >> comma;
+            input >> computationTime;
+            input >> comma;
+            input >> period;
 
-            input >> task.ID >> task.computationTime >> task.period;
-            periodicTask.add(task);
-
-            // add instance of task to a vector
+            Task t(period, 0, 0, 0, computationTime, ID);
+            periodicTasks.push_back(t);
         }
 
         int numAperiodic;
@@ -59,16 +71,68 @@ int main(int arc, char** argv) {
         input >> numAperiodic;
 
         for(int i = 0; i < numAperiodic; i++) {
-            char TaskId;
-            int computationTime, releaseTime;
+            input >> ID;
+            input >> comma;
+            input >> computationTime;
+            input >> comma;
+            input >> releaseTime;
 
-            input >> TaskId >> computationTime >> period;
-
-            // create instance of aperiodic task
-
-            // add instance of task to a vector
+            Task t(0, 500, releaseTime, computationTime, computationTime, ID);
+            aperiodicTasks.push_back(t);
         }
 
+        Priority<Task> queue;
+
+        int clock = 0;
+        while(clock != simulationTime) {
+            // std::cout << std::endl;
+            for(int i = 0; i < periodicTasks.size(); i++) {
+                if(clock % periodicTasks[i].period == 0) {
+                    std::cout << "Released Task " << periodicTasks[i].ID << " at time = " << clock << " ms" << std::endl;
+                    periodicTasks[i].duration = periodicTasks[i].computationTime;
+                    queue.enqueue(periodicTasks[i]);
+                }
+            }
+
+            for(int i = 0; i < aperiodicTasks.size(); i++) {
+                if(clock == aperiodicTasks[i].releaseTime) {
+                    std::cout << "Released Task " << aperiodicTasks[i].ID << " at time = " << clock << " ms" << std::endl;
+                }
+            }
+
+            // std::cout << std::endl;
+
+            if(queue.isEmpty()) {
+                // std::cout << "queue is empty. doing work on aperiodic task" << std::endl;
+                for(int i = 0; i < aperiodicTasks.size(); i++) {
+                    if(clock >= aperiodicTasks[i].releaseTime && aperiodicTasks[i].duration != 0) {
+                        std::cout << "\tWork on Task " << aperiodicTasks[i].ID << " at time = " << clock << " ms" << std::endl;
+                        aperiodicTasks[i].duration = aperiodicTasks[i].duration - 1;
+                        if(aperiodicTasks[i].duration == 0) {
+                            std::cout << "Completed Task " << aperiodicTasks[i].ID << " at time = " << clock << " ms" << std::endl;
+                        }
+                        i = aperiodicTasks.size();
+                    }
+                }
+            }  
+            else {
+                Task priority = queue.dequeue();
+                priority.duration = priority.duration - 1;
+                std::cout << "\tWork on Task " << priority.ID << " at time = " << clock << " ms" << std::endl;
+                if(priority.duration == 0) {
+                    std::cout << "Completed Task " << priority.ID << " at time = " << clock << " ms" << std::endl;
+                }
+                else {
+                    queue.enqueue(priority);
+                }
+            }
+
+            clock = clock + 1;
+                
+        }
+
+        input.close();
+        output.close();
     }
 }
 
