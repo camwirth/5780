@@ -1,0 +1,217 @@
+
+
+----- RM SCHEDULE -----
+
+Task A released at 0 ms
+Task B released at 0 ms
+Task C released at 0 ms
+Task D released at 0 ms
+Task E released at 0 ms
+	Task A started at 0 ms
+Task A completed at 9 ms
+	Task B started at 10 ms
+Task B completed at 24 ms
+	Task C started at 25 ms
+Task C completed at 44 ms
+	Task D started at 45 ms
+Task D completed at 74 ms
+	Task E started at 75 ms
+Task E completed at 94 ms
+Task A released at 100 ms
+Task B released at 100 ms
+Task C released at 100 ms
+Task D released at 100 ms
+	Task A started at 100 ms
+Task A completed at 109 ms
+	Task B started at 110 ms
+Task B completed at 124 ms
+	Task C started at 125 ms
+Task C completed at 144 ms
+	Task D started at 145 ms
+Task D completed at 174 ms
+Task W released at 175 ms
+	Task W started at 175 ms
+Task W completed at 189 ms
+Task A released at 200 ms
+Task B released at 200 ms
+Task C released at 200 ms
+Task D released at 200 ms
+Task E released at 200 ms
+	Task A started at 200 ms
+Task A completed at 209 ms
+	Task B started at 210 ms
+Task B completed at 224 ms
+	Task C started at 225 ms
+Task X released at 230 ms
+Task C completed at 244 ms
+	Task D started at 245 ms
+Task Y released at 265 ms
+Task D completed at 274 ms
+	Task E started at 275 ms
+Task Z released at 280 ms
+Task E completed at 294 ms
+	Task X started at 295 ms
+Task A released at 300 ms
+Task B released at 300 ms
+Task C released at 300 ms
+Task D released at 300 ms
+Task X preempted by Task A
+	Task A started at 300 ms
+Task A completed at 309 ms
+	Task B started at 310 ms
+Task B completed at 324 ms
+	Task C started at 325 ms
+Task C completed at 344 ms
+	Task D started at 345 ms
+Task D completed at 374 ms
+Task X completed at 379 ms
+	Task Y started at 380 ms
+Task Y completed at 389 ms
+	Task Z started at 390 ms
+Task A released at 400 ms
+Task B released at 400 ms
+Task C released at 400 ms
+Task D released at 400 ms
+Task E released at 400 ms
+Task V released at 400 ms
+Task Z preempted by Task A
+	Task A started at 400 ms
+Task A completed at 409 ms
+	Task B started at 410 ms
+Task B completed at 424 ms
+	Task C started at 425 ms
+Task C completed at 444 ms
+	Task D started at 445 ms
+Task D completed at 474 ms
+	Task E started at 475 ms
+Task E completed at 494 ms
+	Task V started at 495 ms
+Task V completed at 499 ms
+Task A released at 500 ms
+Task B released at 500 ms
+Task C released at 500 ms
+Task D released at 500 ms
+	Task A started at 500 ms
+Task A completed at 509 ms
+	Task B started at 510 ms
+Task B completed at 524 ms
+	Task C started at 525 ms
+Task C completed at 544 ms
+	Task D started at 545 ms
+Task D completed at 574 ms
+Task Z completed at 579 ms
+
+------ RM SCHEDULE SUMMARY -----
+Number of released tasks: 32
+Number of preemptions: 2
+Number of completed tasks: 32
+Number of missed deadlines: 0
+
+
+----- EDF SCHEDULE -----
+
+Task A released at 0 ms
+Task B released at 0 ms
+Task C released at 0 ms
+Task D released at 0 ms
+Task E released at 0 ms
+	Task A started at 0 ms
+Task A completed at 9 ms
+	Task B started at 10 ms
+Task B completed at 24 ms
+	Task C started at 25 ms
+Task C completed at 44 ms
+	Task D started at 45 ms
+Task D completed at 74 ms
+	Task E started at 75 ms
+Task E completed at 94 ms
+Task A released at 100 ms
+Task B released at 100 ms
+Task C released at 100 ms
+Task D released at 100 ms
+	Task A started at 100 ms
+Task A completed at 109 ms
+	Task B started at 110 ms
+Task B completed at 124 ms
+	Task C started at 125 ms
+Task C completed at 144 ms
+	Task D started at 145 ms
+Task D completed at 174 ms
+Task W released at 175 ms
+	Task W started at 175 ms
+Task W completed at 189 ms
+Task A released at 200 ms
+Task B released at 200 ms
+Task C released at 200 ms
+Task D released at 200 ms
+Task E released at 200 ms
+	Task A started at 200 ms
+Task A completed at 209 ms
+	Task B started at 210 ms
+Task B completed at 224 ms
+	Task C started at 225 ms
+Task X released at 230 ms
+Task C completed at 244 ms
+	Task D started at 245 ms
+Task Y released at 265 ms
+Task D completed at 274 ms
+	Task E started at 275 ms
+Task Z released at 280 ms
+Task E completed at 294 ms
+	Task X started at 295 ms
+Task A released at 300 ms
+Task B released at 300 ms
+Task C released at 300 ms
+Task D released at 300 ms
+Task X preempted by Task A
+	Task A started at 300 ms
+Task A completed at 309 ms
+	Task B started at 310 ms
+Task B completed at 324 ms
+	Task C started at 325 ms
+Task C completed at 344 ms
+	Task D started at 345 ms
+Task D completed at 374 ms
+Task X completed at 379 ms
+	Task Y started at 380 ms
+Task Y completed at 389 ms
+	Task Z started at 390 ms
+Task A released at 400 ms
+Task B released at 400 ms
+Task C released at 400 ms
+Task D released at 400 ms
+Task E released at 400 ms
+Task V released at 400 ms
+Task Z preempted by Task V
+	Task V started at 400 ms
+Task V completed at 404 ms
+	Task A started at 405 ms
+Task A completed at 414 ms
+	Task B started at 415 ms
+Task B completed at 429 ms
+Task Z completed at 434 ms
+	Task C started at 435 ms
+Task C completed at 454 ms
+	Task D started at 455 ms
+Task D completed at 484 ms
+	Task E started at 485 ms
+Task A released at 500 ms
+Task B released at 500 ms
+Task C released at 500 ms
+Task D released at 500 ms
+Task E preempted by Task A
+	Task A started at 500 ms
+Task A completed at 509 ms
+	Task B started at 510 ms
+Task B completed at 524 ms
+	Task C started at 525 ms
+Task C completed at 544 ms
+Task E completed at 549 ms
+	Task D started at 550 ms
+Task D completed at 579 ms
+
+------ EDF SCHEDULE SUMMARY -----
+Number of released tasks: 32
+Number of preemptions: 3
+Number of completed tasks: 32
+Number of missed deadlines: 0

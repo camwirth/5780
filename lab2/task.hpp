@@ -4,30 +4,8 @@
 
 class Task {
     public:
-        Task(int p, int de, int r, int d, int c, char i) {
-            period = p;
-            deadline = de;
-            releaseTime = r;
-            duration = d;
-            computationTime = c;
-            ID = i;
-        }
-
-        Task() {
-            period = 0;
-            deadline = 0;
-            releaseTime = 0;
-            duration = 0;
-            computationTime = 0;
-            ID = 0;
-        }
-        
-        int period;
-        int deadline;
-        int releaseTime;
-        int duration;
-        int computationTime;
-        char ID;
+        Task(int p, int de, int r, int d, int c, char i);
+        Task();
 
         friend inline bool operator < (const Task& lhs, const Task& rhs) {
             if(lhs.period < rhs.period) {
@@ -45,9 +23,15 @@ class Task {
             }
         }
 
-        friend std::ostream& operator << (std::ostream& os, Task& in) {
-            os << "Task " << in.ID << " " << std::endl;
-        }
+        friend std::ostream& operator << (std::ostream& os, Task& in);
+        
+        int period;
+        int deadline;
+        int releaseTime;
+        int duration;
+        int computationTime;
+        char ID;
+
 };
 
 #endif
