@@ -6,13 +6,17 @@
 #include <string>
 #include <stdlib.h>
 
+// template class to create a priority queue
+
 template<class T>
 class Priority {
     public:
+    int size;
 
         // create empty priority queue - set root to null
         Priority() {
             root = NULL;
+            size = 0;
         }
 
         // add a node to the priority queue
@@ -27,6 +31,7 @@ class Priority {
                 // if queue is not empty, merge new node with the rest of the queue 
                 root = merge(root, newNode);
             }
+            size++;
         }
 
         // remove the min priority from the priority queue 
@@ -45,6 +50,8 @@ class Priority {
 
                 // delete the memory for root node
                 delete temp;
+
+                size--;
 
                 //return the task from the root node 
                 return minTask;
@@ -70,6 +77,7 @@ class Priority {
     private:
         // node pointer is the root of the tree (most prioritized task)
         Node<T>* root;
+        
 
         // function recursively prints the priority queue
         void printQueue(Node<T>* node, std::string spaces) {
@@ -127,6 +135,7 @@ class Priority {
         Node<T>* merge(Node<T>* t1, Node<T>* t2) {
             Node<T>* small;
 
+            // check if either node is null, if so, return other node
             if(t1 == NULL) {
                 return t2;
             }
@@ -134,21 +143,28 @@ class Priority {
                 return t1;
             }
 
-            // overload < operator
+            // if t1 has smaller priority than t2, merge right node of t1 with t2
+            // small node becomes t1
             if(t1->task < t2->task) {
                 t1->right = merge(t1->right, t2);
                 small = t1;
-            } else {
+            } 
+            // if t2 has smaller priority than t1, merge right node of t1 with t2
+            // small node becomes t2
+            else {
                 t2->right = merge(t2->right, t1);
                 small = t2;
             }
 
+            // if left child branch has smaller npl than right child, swap children
             if (getNpl(small->left) < getNpl(small->right)) {
                 swapChildren(small);
             }
 
+            // find npl for small
             setNullPathLength(small);
 
+            // return small
             return small;
         }
 

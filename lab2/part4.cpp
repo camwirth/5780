@@ -1,5 +1,3 @@
-// read in files
-// #include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -16,6 +14,7 @@ int main(int argc, char** argv)
 
     // create vector to hold all tasks for edf scheduling
     std::vector<TaskEDF> edfTasks;
+    std::vector<TaskEDF> tasks_in_EDFqueue;
 
     // create variables to keep track of previous executed task info
     char lastTask;
@@ -104,11 +103,11 @@ int main(int argc, char** argv)
             input >> releaseTime;
 
             // create a new instance of the task and add it to aperiodic vector
-            Task t(0, aperiodicDeadline, releaseTime, computationTime, computationTime, ID);
+            Task t(0, releaseTime + aperiodicDeadline, releaseTime, computationTime, computationTime, ID);
             aperiodicTasks.push_back(t);
 
             // create new EDF task and add to edf vector
-            TaskEDF t2(0, aperiodicDeadline, releaseTime, computationTime, computationTime, ID);
+            TaskEDF t2(0, releaseTime + aperiodicDeadline, releaseTime, computationTime, computationTime, ID);
             edfTasks.push_back(t2);
         }
     } 
@@ -165,151 +164,153 @@ int main(int argc, char** argv)
                 // increment released count
                 RMreleasedTasks++;
             }
+            // check if any tasks have missed their deadline
+            if(clock == aperiodicTasks[i].deadline && aperiodicTasks[i].duration != 0)
+            {
+                // print warning message and discard task
+                output << "!!! WARNING !!! Task " << aperiodicTasks[i].ID;
+                output << " has missed its deadline and is discarded." << std::endl;
+
+                // update duration to discard task
+                aperiodicTasks[i].duration = 0;
+
+                // update missed deadline count
+                RMdeadline_missed++;
+            }
         }
 
         // check if the priority queue is empty -- execute aperiodic task
         if(RMqueue.isEmpty()) 
-        {
-            
+        {   
             // loop through aperiodic tasks
             for(int i = 0; i < aperiodicTasks.size(); i++) 
             {
                 // find released aperiodic task that has not been completed
                 if(clock >= aperiodicTasks[i].releaseTime && aperiodicTasks[i].duration != 0) 
                 {
-                    // check for missed deadline
-                    if(aperiodicTasks[i].deadline == clock) 
-                    {
-                        // print warning message and discard task
-                        output << "WARNING !!! Task " << aperiodicTasks[i].ID;
-                        output << " has missed its deadline." << std::endl;
-                        output << "\tTask " << aperiodicTasks[i].ID << "is discarded";
-                        output << std::endl;
-
-                        // update duration to discard task
-                        aperiodicTasks[i].duration = 0;
-
-                        // update missed deadline count
-                        RMdeadline_missed++;
-                    } 
-                    else    // if task has NOT missed deadline 
-                    {
-                        // check for preemption
-                        if(lastTask != aperiodicTasks[i].ID && lastTaskdur != 0 && clock != 0) 
-                        {
-                            // print message
-                            output << "Task " << lastTask << " preempted by Task ";
-                            output << aperiodicTasks[i].ID << std::endl;
-
-                            // update preemption count
-                            RMpreemption++;
-                        }
-                        
-                        // check if task has just begun
-                        if(aperiodicTasks[i].duration == aperiodicTasks[i].computationTime)
-                        {
-                            output << "\tTask " << aperiodicTasks[i].ID << " started at ";
-                            output << clock << " ms" << std::endl;
-                        }
-
-                        // do work on task
-                        aperiodicTasks[i].duration = aperiodicTasks[i].duration - 1;
-
-                        // update lastTask info
-                        lastTask = aperiodicTasks[i].ID;
-                        lastTaskdur = aperiodicTasks[i].duration;
-
-                        // check if task is completed
-                        if(aperiodicTasks[i].duration == 0) 
-                        {
-                            // print message
-                            output << "Task " << aperiodicTasks[i].ID << " completed at ";
-                            output << clock << " ms" << std::endl;
-
-                            // update completed task count
-                            RMcompletedTasks++;
-                        }
-
-                        // end loop 
-                        i = aperiodicTasks.size();
-                    }
-                }
-            }
-        }  
-        else    // priority queue is not empty, work on RM task 
-        {
-            // loop through tasks until valid task is found
-            int done = 0;
-            while(!done) 
-            {
-                // dequeue highest priority task
-                Task t = RMqueue.dequeue();
-
-                // check if deadline has been missed
-                if(t.deadline == clock) 
-                {
-                    // print error message 
-                    output << "WARNING !!! Task " << t.ID;
-                    output << " has missed its deadline." << std::endl;
-                    output << "\tTask " << t.ID << "is discarded";
-                    output << std::endl;
-
-                    // update missed deadline count
-                    RMdeadline_missed++;
-                }   
-                else    // deadline hasn't been misssed 
-                {
                     // check for preemption
-                    if(lastTask != t.ID && lastTaskdur != 0 && clock != 0) 
+                    if(lastTask != aperiodicTasks[i].ID && lastTaskdur != 0 && clock != 0) 
                     {
                         // print message
-                        output << "Task " << lastTask << " preempted by Task ";
-                        output << t.ID << std::endl;
+                        output << "--- Task " << lastTask << " preempted by Task ";
+                        output << aperiodicTasks[i].ID << " ---" << std::endl;
 
                         // update preemption count
                         RMpreemption++;
-                    }
+                    } 
 
-                    // check if task has just begun 
-                    if(t.duration == t.computationTime) 
+                    // check if working on a new task
+                    else if(lastTask != aperiodicTasks[i].ID)
                     {
-                        output << "\tTask " << t.ID << " started at ";
+                        output << "\tWorking on Task " << aperiodicTasks[i].ID << " at ";
                         output << clock << " ms" << std::endl;
                     }
-                    // do work to task
-                    t.duration = t.duration - 1;
+                    
+                    // do work on task
+                    aperiodicTasks[i].duration = aperiodicTasks[i].duration - 1;
 
                     // update lastTask info
-                    lastTask = t.ID;
-                    lastTaskdur = t.duration;
+                    lastTask = aperiodicTasks[i].ID;
+                    lastTaskdur = aperiodicTasks[i].duration;
 
                     // check if task is completed
-                    if(t.duration == 0) 
+                    if(aperiodicTasks[i].duration == 0) 
                     {
                         // print message
-                        output << "Task " << t.ID << " completed at ";
+                        output << "Task " << aperiodicTasks[i].ID << " completed at ";
                         output << clock << " ms" << std::endl;
 
                         // update completed task count
                         RMcompletedTasks++;
-                    } 
-                    else // task is not completed
-                    {
-                        // add task back onto priority queue
-                        RMqueue.enqueue(t);
                     }
 
                     // end loop 
-                    done = 1;
+                    i = aperiodicTasks.size();
+            }
+            }
+        }  
+        else    // priority queue is not empty, work on RM task 
+        {
+            Priority<Task> temp;
+
+            // loop through queue
+            while(!RMqueue.isEmpty())
+            {
+                // check all tasks in queue
+                Task t = RMqueue.dequeue();
+                // check for missed deadline
+                if(t.deadline == clock)
+                {
+                    // print error message 
+                    output << "!!! WARNING !!! Task " << t.ID;
+                    output << " has missed its deadline and is discarded." << std::endl;
+
+                    // update missed deadline count
+                    RMdeadline_missed++;
+                }
+                // enqueue tasks without missed deadlines to temp
+                else 
+                {
+                    temp.enqueue(t);
                 }
             }
+
+            // copy temp to RMqueue
+            while(!temp.isEmpty())
+            {
+                Task t = temp.dequeue();
+                RMqueue.enqueue(t);
+            }
+
+            // dequeue highest priority task
+            Task t = RMqueue.dequeue();
+            // check for preemption
+            if(lastTask != t.ID && lastTaskdur != 0 && clock != 0) 
+            {
+                // print message
+                output << "--- Task " << lastTask << " preempted by Task ";
+                output << t.ID << " ---" <<std::endl;
+
+                // update preemption count
+                RMpreemption++;
+            }
+            // check if new task is being worked on
+            if(lastTask != t.ID)
+            {
+                output << "\tWorking on Task " << t.ID << " at ";
+                output << clock << " ms" << std::endl;
+            }
+
+            // do work to task
+            t.duration = t.duration - 1;
+
+            // update lastTask info
+            lastTask = t.ID;
+            lastTaskdur = t.duration;
+
+            // check if task is completed
+            if(t.duration == 0) 
+            {
+                // print message
+                output << "Task " << t.ID << " completed at ";
+                output << clock << " ms" << std::endl;
+
+                // update completed task count
+                RMcompletedTasks++;
+            } 
+            else // task is not completed
+            {
+                // add task back onto priority queue
+                RMqueue.enqueue(t);
+            }
+
         }
 
         // increment clock
         clock = clock + 1;
     }
 
-    // print summary
+    // print summary for RM
     output << std::endl << "------ RM SCHEDULE SUMMARY -----" << std::endl;
     output << "Number of released tasks: " << RMreleasedTasks << std::endl;
     output << "Number of preemptions: " << RMpreemption << std::endl;
@@ -349,86 +350,90 @@ int main(int argc, char** argv)
             }
         }
 
-        // loop through tasks until valid task is found
-        int done = 0;
-        while(!done)
+        Priority<TaskEDF> temp;
+        int count = 0;
+        // loop through queue to check for missed deadlines
+        while(!EDFqueue.isEmpty())
         {
-            // check that queue is not empty
-            if(!EDFqueue.isEmpty())
-            {    
-                // dequeue highest priority task
-                TaskEDF t = EDFqueue.dequeue();
+            // dequeue each task in queue
+            TaskEDF t = EDFqueue.dequeue();
 
-                // check if deadline has been missed
-                if(t.deadline == clock2) 
-                {
-                    // print error message 
-                    output << "WARNING !!! Task " << t.ID;
-                    output << " has missed its deadline." << std::endl;
-                    output << "\tTask " << t.ID << " is discarded";
-                    output << std::endl;
-
-                    // update missed deadline count
-                    EDFdeadline_missed++;
-                }   
-                else    // deadline hasn't been misssed 
-                {
-                    // check for preemption
-                    if(lastTask != t.ID && lastTaskdur != 0 && clock2 != 0) 
-                    {
-                        // print message
-                        output << "Task " << lastTask << " preempted by Task ";
-                        output << t.ID << std::endl;
-
-                        // update preemption count
-                        EDFpreemption++;
-                    }
-
-                    // check if task has just begun 
-                    if(t.duration == t.computationTime) 
-                    {
-                        output << "\tTask " << t.ID << " started at ";
-                        output << clock2 << " ms" << std::endl;
-                    }
-
-                    // do work to task
-                    t.duration = t.duration - 1;
-
-                    // update lastTask info
-                    lastTask = t.ID;
-                    lastTaskdur = t.duration;
-
-                    // check if task is completed
-                    if(t.duration == 0) 
-                    {
-                        // print message
-                        output << "Task " << t.ID << " completed at ";
-                        output << clock2 << " ms" << std::endl;
-
-                        // update completed task count
-                        EDFcompletedTasks++;
-                    }
-                    else  // task is not completed
-                    {
-                        // add task back onto priority queue
-                        EDFqueue.enqueue(t);
-                    }
-
-                    // end loop 
-                    done = 1;
-                }
-            }
-            else
+            // check if task has missed deadline
+            if(t.deadline == clock2)
             {
-                done = 1;
+                // print error message 
+                output << "!!! WARNING !!! Task " << t.ID;
+                output << " has missed its deadline and is discarded." << std::endl;
+
+                // update missed deadline count
+                EDFdeadline_missed++;
+            }
+            else 
+            {
+                // enqueue task to temp if it has not missed the deadline
+                temp.enqueue(t);
             }
         }
-    
+
+        // copy temp to taskEDF queue
+        while(!temp.isEmpty())
+        {
+            TaskEDF t = temp.dequeue();
+            EDFqueue.enqueue(t);
+        }
+
+        // check that queue is not empty
+        if(!EDFqueue.isEmpty())
+        {    
+            // dequeue highest priority task
+            TaskEDF t = EDFqueue.dequeue();
+            // check for preemption
+            if(lastTask != t.ID && lastTaskdur != 0 && clock2 != 0) 
+            {
+                // print message
+                output << "--- Task " << lastTask << " preempted by Task ";
+                output << t.ID << " ---" << std::endl;
+
+                // update preemption count
+                EDFpreemption++;
+            }
+
+            // check if new task is being worked on
+            if(lastTask != t.ID) 
+            {
+                output << "\tWorking on Task " << t.ID << " at ";
+                output << clock2 << " ms" << std::endl;
+            }
+
+            // do work to task
+            t.duration = t.duration - 1;
+
+            // update lastTask info
+            lastTask = t.ID;
+            lastTaskdur = t.duration;
+
+            // check if task is completed
+            if(t.duration == 0) 
+            {
+                // print message
+                output << "Task " << t.ID << " completed at ";
+                output << clock2 << " ms" << std::endl;
+
+                // update completed task count
+                EDFcompletedTasks++;
+            }
+            else  // task is not completed
+            {
+                // add task back onto priority queue
+                EDFqueue.enqueue(t);
+            }
+        }
+
         // update clock
         clock2++;
     }
 
-    // print summary
+    // print summary EDF
     output << std::endl << "------ EDF SCHEDULE SUMMARY -----" << std::endl;
     output << "Number of released tasks: " << EDFreleasedTasks << std::endl;
     output << "Number of preemptions: " << EDFpreemption << std::endl;

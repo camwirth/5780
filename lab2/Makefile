@@ -10,5 +10,7 @@ task.o: task.cpp task.hpp
 taskEDF.o: taskEDF.cpp task.hpp
 	g++ -c taskEDF.cpp
 
-clean:
-	rm -f part4 part4.o priority.o task.o taskEDF.o
+clean: 
+	rm -f part4.o task.o taskEDF.o part4
+
+

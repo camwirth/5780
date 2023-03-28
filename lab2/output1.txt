@@ -1,0 +1,258 @@
+
+
+----- RM SCHEDULE -----
+
+Task A released at 0 ms
+Task B released at 0 ms
+Task C released at 0 ms
+Task D released at 0 ms
+Task E released at 0 ms
+	Working on Task A at 0 ms
+Task A completed at 9 ms
+	Working on Task B at 10 ms
+Task B completed at 29 ms
+	Working on Task C at 30 ms
+Task A released at 60 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 60 ms
+Task A completed at 69 ms
+	Working on Task C at 70 ms
+Task C completed at 79 ms
+	Working on Task D at 80 ms
+Task B released at 100 ms
+--- Task D preempted by Task B ---
+	Working on Task B at 100 ms
+Task B completed at 119 ms
+Task A released at 120 ms
+	Working on Task A at 120 ms
+Task A completed at 129 ms
+	Working on Task D at 130 ms
+Task C released at 160 ms
+--- Task D preempted by Task C ---
+	Working on Task C at 160 ms
+Task A released at 180 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 180 ms
+Task A completed at 189 ms
+	Working on Task C at 190 ms
+Task B released at 200 ms
+--- Task C preempted by Task B ---
+	Working on Task B at 200 ms
+Task B completed at 219 ms
+	Working on Task C at 220 ms
+Task C completed at 229 ms
+	Working on Task D at 230 ms
+Task D completed at 239 ms
+Task A released at 240 ms
+	Working on Task A at 240 ms
+Task A completed at 249 ms
+	Working on Task E at 250 ms
+Task A released at 300 ms
+Task B released at 300 ms
+--- Task E preempted by Task A ---
+	Working on Task A at 300 ms
+Task A completed at 309 ms
+	Working on Task B at 310 ms
+Task C released at 320 ms
+Task B completed at 329 ms
+	Working on Task C at 330 ms
+Task A released at 360 ms
+Task D released at 360 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 360 ms
+Task A completed at 369 ms
+	Working on Task C at 370 ms
+Task C completed at 379 ms
+	Working on Task D at 380 ms
+Task B released at 400 ms
+--- Task D preempted by Task B ---
+	Working on Task B at 400 ms
+Task B completed at 419 ms
+Task A released at 420 ms
+	Working on Task A at 420 ms
+Task A completed at 429 ms
+	Working on Task D at 430 ms
+Task D completed at 469 ms
+	Working on Task E at 470 ms
+Task A released at 480 ms
+Task C released at 480 ms
+--- Task E preempted by Task A ---
+	Working on Task A at 480 ms
+Task A completed at 489 ms
+	Working on Task C at 490 ms
+Task B released at 500 ms
+--- Task C preempted by Task B ---
+	Working on Task B at 500 ms
+Task B completed at 519 ms
+	Working on Task C at 520 ms
+Task A released at 540 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 540 ms
+Task A completed at 549 ms
+	Working on Task C at 550 ms
+Task C completed at 559 ms
+	Working on Task E at 560 ms
+Task E completed at 599 ms
+Task A released at 600 ms
+Task B released at 600 ms
+	Working on Task A at 600 ms
+Task A completed at 609 ms
+	Working on Task B at 610 ms
+Task B completed at 629 ms
+Task C released at 640 ms
+	Working on Task C at 640 ms
+Task A released at 660 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 660 ms
+Task A completed at 669 ms
+	Working on Task C at 670 ms
+Task C completed at 689 ms
+Task B released at 700 ms
+	Working on Task B at 700 ms
+Task B completed at 719 ms
+Task A released at 720 ms
+Task D released at 720 ms
+	Working on Task A at 720 ms
+Task A completed at 729 ms
+	Working on Task D at 730 ms
+Task A released at 780 ms
+--- Task D preempted by Task A ---
+	Working on Task A at 780 ms
+Task A completed at 789 ms
+	Working on Task D at 790 ms
+Task D completed at 799 ms
+
+------ RM SCHEDULE SUMMARY -----
+Number of released tasks: 31
+Number of preemptions: 13
+Number of completed tasks: 31
+Number of missed deadlines: 0
+
+
+----- EDF SCHEDULE -----
+
+Task A released at 0 ms
+Task B released at 0 ms
+Task C released at 0 ms
+Task D released at 0 ms
+Task E released at 0 ms
+	Working on Task A at 0 ms
+Task A completed at 9 ms
+	Working on Task B at 10 ms
+Task B completed at 29 ms
+	Working on Task C at 30 ms
+Task A released at 60 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 60 ms
+Task A completed at 69 ms
+	Working on Task C at 70 ms
+Task C completed at 79 ms
+	Working on Task D at 80 ms
+Task B released at 100 ms
+--- Task D preempted by Task B ---
+	Working on Task B at 100 ms
+Task B completed at 119 ms
+Task A released at 120 ms
+	Working on Task A at 120 ms
+Task A completed at 129 ms
+	Working on Task D at 130 ms
+Task C released at 160 ms
+--- Task D preempted by Task C ---
+	Working on Task C at 160 ms
+Task A released at 180 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 180 ms
+Task A completed at 189 ms
+	Working on Task C at 190 ms
+Task B released at 200 ms
+--- Task C preempted by Task B ---
+	Working on Task B at 200 ms
+Task B completed at 219 ms
+	Working on Task C at 220 ms
+Task C completed at 229 ms
+	Working on Task D at 230 ms
+Task D completed at 239 ms
+Task A released at 240 ms
+	Working on Task A at 240 ms
+Task A completed at 249 ms
+	Working on Task E at 250 ms
+Task A released at 300 ms
+Task B released at 300 ms
+--- Task E preempted by Task A ---
+	Working on Task A at 300 ms
+Task A completed at 309 ms
+	Working on Task B at 310 ms
+Task C released at 320 ms
+Task B completed at 329 ms
+	Working on Task C at 330 ms
+Task A released at 360 ms
+Task D released at 360 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 360 ms
+Task A completed at 369 ms
+	Working on Task C at 370 ms
+Task C completed at 379 ms
+	Working on Task D at 380 ms
+Task B released at 400 ms
+--- Task D preempted by Task B ---
+	Working on Task B at 400 ms
+Task B completed at 419 ms
+Task A released at 420 ms
+	Working on Task A at 420 ms
+Task A completed at 429 ms
+	Working on Task D at 430 ms
+Task D completed at 469 ms
+	Working on Task E at 470 ms
+Task A released at 480 ms
+Task C released at 480 ms
+--- Task E preempted by Task A ---
+	Working on Task A at 480 ms
+Task A completed at 489 ms
+	Working on Task C at 490 ms
+Task B released at 500 ms
+--- Task C preempted by Task B ---
+	Working on Task B at 500 ms
+Task B completed at 519 ms
+	Working on Task C at 520 ms
+Task A released at 540 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 540 ms
+Task A completed at 549 ms
+	Working on Task C at 550 ms
+Task C completed at 559 ms
+	Working on Task E at 560 ms
+Task E completed at 599 ms
+Task A released at 600 ms
+Task B released at 600 ms
+	Working on Task A at 600 ms
+Task A completed at 609 ms
+	Working on Task B at 610 ms
+Task B completed at 629 ms
+Task C released at 640 ms
+	Working on Task C at 640 ms
+Task A released at 660 ms
+--- Task C preempted by Task A ---
+	Working on Task A at 660 ms
+Task A completed at 669 ms
+	Working on Task C at 670 ms
+Task C completed at 689 ms
+Task B released at 700 ms
+	Working on Task B at 700 ms
+Task B completed at 719 ms
+Task A released at 720 ms
+Task D released at 720 ms
+	Working on Task A at 720 ms
+Task A completed at 729 ms
+	Working on Task D at 730 ms
+Task A released at 780 ms
+--- Task D preempted by Task A ---
+	Working on Task A at 780 ms
+Task A completed at 789 ms
+	Working on Task D at 790 ms
+Task D completed at 799 ms
+
+------ EDF SCHEDULE SUMMARY -----
+Number of released tasks: 31
+Number of preemptions: 13
+Number of completed tasks: 31
+Number of missed deadlines: 0

@@ -1,5 +1,6 @@
 #include "task.hpp"
 
+// constructor
 Task::Task(int p, int de, int r, int d, int c, char i) 
 {
     period = p;
@@ -10,6 +11,7 @@ Task::Task(int p, int de, int r, int d, int c, char i)
     ID = i;
 }
 
+// default constructor
 Task::Task() 
 {
     period = 0;
@@ -20,6 +22,7 @@ Task::Task()
     ID = 0;
 }
 
+// overload << operator to print Task
 std::ostream& operator << (std::ostream& os, Task& in) 
 {
     os << "Task " << in.ID << " " << std::endl;

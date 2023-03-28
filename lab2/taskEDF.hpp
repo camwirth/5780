@@ -7,7 +7,10 @@ class TaskEDF {
     public:
         TaskEDF(int p, int de, int r, int d, int c, char i);
         TaskEDF(); 
+
+        // overload < operator to assert priority 
         friend inline bool operator < (const TaskEDF& lhs, const TaskEDF& rhs){
+            // first priority is based on deadline
             if(lhs.deadline < rhs.deadline) {
                 return true;
             }
@@ -15,12 +18,14 @@ class TaskEDF {
                 return false;
             }
             else {
-                // maybe do a third condition
+                // second priority is based on computation time
                 if(lhs.computationTime < rhs.computationTime) {
                     return true;
                 } else if (lhs.computationTime > rhs.computationTime){
                     return false;
-                } else {
+                } 
+                // third prioiryt is based on ID name
+                else {
                     return lhs.ID < rhs.ID;
                 }
             }

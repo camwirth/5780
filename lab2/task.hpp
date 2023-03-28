@@ -7,13 +7,16 @@ class Task {
         Task(int p, int de, int r, int d, int c, char i);
         Task();
 
+        // overload < operator 
         friend inline bool operator < (const Task& lhs, const Task& rhs) {
+            // first priority is based on period of task
             if(lhs.period < rhs.period) {
                 return true;
             }
             else if(lhs.period > rhs.period) {
                 return false;
             }
+            // second priority is based on computation time
             else {
                 if(lhs.computationTime <= rhs.computationTime) {
                     return true;
@@ -23,6 +26,7 @@ class Task {
             }
         }
 
+        // overload << operator
         friend std::ostream& operator << (std::ostream& os, Task& in);
         
         int period;

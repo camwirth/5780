@@ -1,5 +1,6 @@
 #include "taskEDF.hpp"
 
+// constructor
 TaskEDF::TaskEDF(int p, int de, int r, int d, int c, char i) 
 {
     period = p;
@@ -10,6 +11,7 @@ TaskEDF::TaskEDF(int p, int de, int r, int d, int c, char i)
     ID = i;
 }
 
+// default constructor
 TaskEDF::TaskEDF() 
 {
     period = 0;
@@ -20,6 +22,7 @@ TaskEDF::TaskEDF()
     ID = 0;
 }
 
+// << operator to print EDF task
 std::ostream& operator << (std::ostream& os, TaskEDF& in) 
 {
     os << "Task " << in.ID << " " << std::endl;
